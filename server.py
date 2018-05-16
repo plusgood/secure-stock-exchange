@@ -19,18 +19,18 @@ def submit_order():
 	price_nonce = request.values.get('price_nonce', type=int)
 	qty_nonce = request.values.get('qty_nonce', type=int)
 	direction = request.values.get('direction', type=str)
-	
+
 	assert direction in {'ask', 'bid'}
-	
+
 	if direction == "ask":
 		mop.submit_ask(price_ciphertext, qty_ciphertext, price_nonce, qty_nonce)
-		
+
 	if direction == "bid":
 		mop.submit_bid(price_ciphertext, qty_ciphertext, price_nonce, qty_nonce)
-		
+
 	return "submitting order"
-	
-	
+
+
 	'''assert direction in {'ask', 'bid'}
 	price = mop.decrypt(price_ciphertext)
 	quantity = mop.decrypt(qty_ciphertext)
@@ -50,15 +50,15 @@ def bulletin():
 @app.route("/order-book", methods=['GET'])
 def order_book():
 	return mop.get_encrypted_book()
-	
+
 @app.route("/raw-order-book", methods=['GET'])
 def raw_order_book():
 	return mop.get_unencrypted_book()
-	
+
 @app.route("/history", methods=['GET'])
 def history():
 	return mop.get_history()
-	
+
 @app.route("/public-key", methods=['GET'])
 def public_key():
 	return mop.get_public_key()
@@ -66,4 +66,3 @@ def public_key():
 
 if __name__ == "__main__":
 	app.run()
-	

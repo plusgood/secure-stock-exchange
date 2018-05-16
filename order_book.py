@@ -7,22 +7,22 @@ class OrderBook:
 		self.asks = [] # ordered by decreasing price
 		self.history = []
 		self.public_key, self.private_key = paillier.generate_paillier_keypair()
-		
+
 	def decrypt(self, ciphertext):
 		return self.private_key.raw_decrypt(ciphertext)
-				
+
 	def add_bid(self, bid):
 		idx = self.find_bid(bid)
 		self.bids.insert(idx, bid)
 		self.history.append("Received order {0} (bid)".format(bid.id))
 		self.match()
-		
+
 	def add_ask(self, ask):
 		idx = self.find_ask(ask)
 		self.asks.insert(idx, ask)
 		self.history.append("Received order {0} (ask)".format(ask.id))
 		self.match()
-		
+
 	'''
 	Returns the index of the lowest-price bid amongst bids priced above the given one
 	'''
@@ -36,7 +36,7 @@ class OrderBook:
 			else:
 				lower = index
 		return upper
-		
+
 	'''
 	Returns the index of the highest-price ask amongst asks priced below the given one
 	'''
@@ -50,7 +50,7 @@ class OrderBook:
 			else:
 				lower = index
 		return upper
-		
+
 	def match(self):
 		if len(self.bids) == 0 or len(self.asks) == 0:
 			# Nothing to match
@@ -72,7 +72,7 @@ class OrderBook:
 				self.asks.remove(best_ask)
 				self.history.append("Ask {0} filled, removed from orderbook. Price nonce: {1}. Quantity nonce: {2}.".format(best_ask.id, best_ask.price_nonce, best_ask.qty_nonce))
 			self.match()
-			
+
 	def get_unencrypted_book(self):
 		s = "Bids:\n"
 		for bid in self.bids:
@@ -81,7 +81,7 @@ class OrderBook:
 		for ask in self.asks:
 			s += "ID: {0} Price: {1} Quantity: {2}\n".format(ask.id, ask.price, ask.quantity)
 		return s
-		
+
 	def get_encrypted_book(self):
 		s = "Bids:\n"
 		for bid in self.bids:

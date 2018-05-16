@@ -15,12 +15,10 @@ def submit_order(price, quantity, direction):
 	encrypted_qty = int(public_key.encrypt(quantity, r_value=qty_nonce).ciphertext())
 	data = {"encrypted_price": encrypted_price, "encrypted_qty": encrypted_qty, "price_nonce": price_nonce, "qty_nonce": qty_nonce, "direction": direction}
 	r = requests.post(URL + "/submit-order", data)
-	
+
 if __name__ == "__main__":
 	while True:
-		price = int(input("Price?"))
-		qty = int(input("Quantity?"))
-		direction = str(input("Direction?"))
+		price = int(input("Price? "))
+		qty = int(input("Quantity? "))
+		direction = str(input("Direction? "))
 		submit_order(price, qty, direction)
-
-
