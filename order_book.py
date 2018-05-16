@@ -27,7 +27,7 @@ class OrderBook:
 	Returns the index of the lowest-price bid amongst bids priced above the given one
 	'''
 	def find_bid(self, bid):
-		lower = 0
+		lower = -1
 		upper = len(self.bids)
 		while upper - lower > 1:
 			index = (lower + upper)//2
@@ -41,7 +41,7 @@ class OrderBook:
 	Returns the index of the highest-price ask amongst asks priced below the given one
 	'''
 	def find_ask(self, ask):
-		lower = 0
+		lower = -1
 		upper = len(self.asks)
 		while upper - lower > 1:
 			index = (lower + upper)//2
