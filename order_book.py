@@ -1,5 +1,6 @@
 import phe
 from phe import paillier
+import phe.util
 
 class OrderBook:
 	def __init__(self):
@@ -61,6 +62,18 @@ class OrderBook:
 			matched_qty = min(best_bid.quantity, best_ask.quantity)
 			self.history.append("Matched bid {0} with ask {1} for quantity {2}"
 								.format(best_bid.id, best_ask.id, matched_qty))
+
+			small, big = sorted([best_bid, best_ask], key=lambda x: (x.quantity, x.direction))
+			i, j = small.id, big.id
+
+			self.history.append('Proof for match: r_p_{j}/r_p_{i} = {0}, ' \
+								'q_{j} - q_{i} - 1 = {1}, ' \
+								'p_{j} - p_{i} = {2}'
+								 .format(big.price_nonce * phe.util.invert(small.price_nonce, self.public_key.n**2),
+										 big.quantity - small.quantity - 1,
+										 big.price - small.price,
+										 i=i, j=j))
+
 			best_bid.quantity -= matched_qty
 			best_ask.quantity -= matched_qty
 			if best_bid.quantity == 0:
