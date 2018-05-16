@@ -52,25 +52,25 @@ class OrderBook:
 		return upper
 
 	def match(self):
-        while len(self.bids) > 0 and len(self.asks) > 0:
-		    best_bid = self.bids[-1]
-		    best_ask = self.asks[-1]
-            if best_bid.price < best_ask.price:
-			    # best bid/ask don't match
-			    break
+		while len(self.bids) > 0 and len(self.asks) > 0:
+			best_bid = self.bids[-1]
+			best_ask = self.asks[-1]
+			if best_bid.price < best_ask.price:
+				# best bid/ask don't match
+				break
 			matched_qty = min(best_bid.quantity, best_ask.quantity)
 			self.history.append("Matched bid {0} with ask {1} for quantity {2}"
-                                .format(best_bid.id, best_ask.id, matched_qty))
+								.format(best_bid.id, best_ask.id, matched_qty))
 			best_bid.quantity -= matched_qty
 			best_ask.quantity -= matched_qty
 			if best_bid.quantity == 0:
 				self.bids.remove(best_bid)
 				self.history.append("Bid {} filled, removed from orderbook. Price nonce: {}. Quantity nonce: {}."
-                                    .format(best_bid.id, best_bid.price_nonce, best_bid.qty_nonce))
+									.format(best_bid.id, best_bid.price_nonce, best_bid.qty_nonce))
 			if best_ask.quantity == 0:
 				self.asks.remove(best_ask)
 				self.history.append("Ask {} filled, removed from orderbook. Price nonce: {}. Quantity nonce: {}."
-                                    .format(best_ask.id, best_ask.price_nonce, best_ask.qty_nonce))
+									.format(best_ask.id, best_ask.price_nonce, best_ask.qty_nonce))
 
 	def get_unencrypted_book(self):
 		s = "Bids:\n"
