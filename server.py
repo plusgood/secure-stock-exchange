@@ -10,7 +10,13 @@ app = Flask(__name__)
 
 @app.route("/", methods=['GET'])
 def index():
-	return order_book()
+	return '''
+Encrypted order book: <a href="/order-book">/order-book</a> <br>
+Plaintext order book (for debugging purposes): <a href="/raw-order-book">/raw-order-book</a> <br>
+Trade history and proofs of correctness: <a href="/history">/history</a> <br>
+Market operator public key: <a href="/public-key">/public-key</a> <br>
+POST to <a href="/submit-order">/submit-order</a> to submit orders (see code for parameters)
+'''
 
 @app.route("/submit-order",  methods=['POST'])
 def submit_order():
@@ -29,10 +35,6 @@ def submit_order():
 		mop.submit_bid(price_ciphertext, qty_ciphertext, price_nonce, qty_nonce)
 
 	return "submitting order"
-
-@app.route("/bulletin", methods=['GET'])
-def bulletin():
-	return mop.bulletin
 
 @app.route("/order-book", methods=['GET'])
 def order_book():

@@ -6,7 +6,6 @@ class MarketOperator:
 	def __init__(self):
 		self.book = OrderBook()
 		self.next_id = 0
-		self.bulletin = ''
 
 	def get_public_key(self):
 		return str(self.book.public_key.n)
