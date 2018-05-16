@@ -49,15 +49,15 @@ def bulletin():
 
 @app.route("/order-book", methods=['GET'])
 def order_book():
-	return mop.get_encrypted_book()
+	return mop.get_encrypted_book().replace('\n', '<br>')
 
 @app.route("/raw-order-book", methods=['GET'])
 def raw_order_book():
-	return mop.get_unencrypted_book()
+	return mop.get_unencrypted_book().replace('\n', '<br>')
 
 @app.route("/history", methods=['GET'])
 def history():
-	return mop.get_history()
+	return mop.get_history().replace('\n', '<br>')
 
 @app.route("/public-key", methods=['GET'])
 def public_key():
