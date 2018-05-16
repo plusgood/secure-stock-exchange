@@ -19,7 +19,7 @@ side_label.grid(column=0, row=2)
 quantity_box = Entry(window,width=10)
 quantity_box.grid(column=1, row=0)
 
-price_box = Entry(window,width=10, text="$")
+price_box = Entry(window,width=10)
 price_box.grid(column=1, row=1)
 
 side_dropdown = Combobox(window, text="Side", width=7, state='readonly')
