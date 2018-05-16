@@ -27,21 +27,29 @@ class OrderBook:
 	Returns the index of the lowest-price bid amongst bids priced above the given one
 	'''
 	def find_bid(self, bid):
-		# too lazy to binsearch right now
-		for i in range(len(self.bids)):
-			if self.bids[i].price > bid.price:
-				return i
-		return len(self.bids) # bid higher-price than all current bids
+		lower = 0
+		upper = len(self.bids)
+		while upper - lower > 1:
+			index = (lower + upper)//2
+			if self.bids[index].price > bid.price:
+				upper = index
+			else:
+				lower = index
+		return upper
 		
 	'''
 	Returns the index of the highest-price ask amongst asks priced below the given one
 	'''
 	def find_ask(self, ask):
-		# too lazy to binsearch right now
-		for i in range(len(self.asks)):
-			if self.asks[i].price < ask.price:
-				return i
-		return len(self.asks) # bid higher-price than all current bids
+		lower = 0
+		upper = len(self.asks)
+		while upper - lower > 1:
+			index = (lower + upper)//2
+			if self.asks[index].price < ask.price:
+				upper = index
+			else:
+				lower = index
+		return upper
 		
 	def match(self):
 		if len(self.bids) == 0 or len(self.asks) == 0:
