@@ -30,19 +30,6 @@ def submit_order():
 
 	return "submitting order"
 
-
-	'''assert direction in {'ask', 'bid'}
-	price = mop.decrypt(price_ciphertext)
-	quantity = mop.decrypt(qty_ciphertext)
-	assert quantity > 0
-	assert price > 0
-
-	if direction == "ask":
-		mop.submit_ask(price, quantity)
-	if direction == "bid":
-		mop.submit_bid(price, quantity)
-	return "Submitting order"'''
-
 @app.route("/bulletin", methods=['GET'])
 def bulletin():
 	return mop.bulletin
